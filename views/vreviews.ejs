@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Petsitters</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a href="/" class="navbar-brand"> Petsitters</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/vtypes">Asignaciones</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/vreviews">Reviews</a>
+              </li>
+        </div>
+      </div>
+    </nav>
+
+    
+   
+    <div class="card">
+        <% data.forEach( (data) => { %>
+          
+        <div class="card-header">
+        </div>
+        <div class="card-body mb-1" name="reviews">
+          <blockquote class="blockquote mb-0">
+            <p><%= data.comments%></p>
+            <footer class="blockquote-footer">Rate: <cite title="Source Title"><%= data.rating%></cite>  PetSitter: <cite title="Source Title"> <% sdata.forEach((sdata)=>{%>
+              <%if(sdata.id==data.petsitterid){%>
+                <%=  data.petsitterid=sdata.name%>
+                <%}%>
+                <%})%></cite></footer>
+          </blockquote>
+        </div>
+        <%})%>
+      </div>
+      <div class="col-md-5">
+        <div class="card">
+         <div class="card-body">
+             <form action="/moninsert" method= "post">
+                 <div class = "form-group mb-3">
+                
+                <label for="petsitter">Petsitter: </label>
+                <select class="custom-select mb-3" type="text" name="petsitter" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false">
+       
+                <div class="dropdown-menu" aria-labelledby="City">
+                  <% sdata.forEach( (sdata) => { %>
+                    <option value="<%=sdata.id%>"><%=sdata.name%></option>
+                <%})%>
+              </div>
+            </div>
+                </select>
+                 </div>
+                   <label for="rating">Rating: </label>
+                   <select class="custom-select mb-3" type="text" name="rating" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false">
+                   <div class="dropdown-menu" aria-labelledby="City">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                       
+                 </div>
+               </select>
+               
+                 <div class = "form-group mb-3">
+                     <textarea type="text" rows="3" name="comments" placeholder="Comments" class="form-control"></textarea>
+                 </div>
+                   <button type="submit" class="btn btn-primary"><i class="bi bi-chat-text-fill"></i> Review</button> 
+             </form>
+        </div> 
+     </div>
+</div>
+</div>
+</div>
+      <script>
+        var a = "";
+        for(i=0; i < data.lenght;i++){
+            for(j=0; j<sdata.lenght;j++){
+                if (sdata.id==data.petsitterid){
+                    a=sdata.name;
+                };
+            };
+        };write(a)
+    </script>
+  

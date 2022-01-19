@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Petsitters</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a href="/" class="navbar-brand"> Petsitters</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/vtypes">Asignaciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/vreviews">Reviews</a>
+            </li>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+<div class="container">
+    <div class="row mt-2">
+        <div class= "col-md"> 
+            <table class ="table mt-4">
+            <thead>
+                <tr>
+                  <th style="display: none;">ID</th>
+                    <th>Nombre</th>
+                    <th>Ciudad</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    <th>Celular</th>
+                    <th>PhotoUrl</th>
+                    <th></th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach( (data) => { %>
+              <tr>
+                  <td style="display: none;"><%= data.id%></td>
+                  <td><%= data.name%></td>
+                  <td><%= data.CityId%></td>
+                  <td><%= data.lastname%></td>
+                  <td><%= data.email%></td>
+                  <td><%= data.cellphone%></td>
+                  <td><%= data.photoUrl%></td>
+                  <td></td>
+                  <td>
+                      <a type="button" class="btnEditar btn btn-outline-primary bi bi-pencil"></a>
+                      <a href="/delete/<%= data.id%>" class="btn btn-outline-danger bi bi-trash"></a>
+                  </td>
+              </tr>
+              <%})%>
+  
+            </tbody>
+          </table>
+         
+        
+        </div>
+        <div class="col-md-5">
+           <div class="card">
+            <div class="card-body">
+                <form action="/insert" method= "post">
+                    <div class = "form-group mb-3">
+                        <input type="text" name="name" placeholder="Nombre" class="form-control">
+                    </div>
+                      <label for="CityId">Ciudad: </label>
+                      <select class="custom-select mb-3" type="text" name="CityId" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false">
+             
+                      <div class="dropdown-menu" aria-labelledby="City">
+                        <% cdata.forEach( (cdata) => { %>
+                          <option value="<%=cdata.id%>"><%=cdata.Nombre%></option>
+                      <%})%>
+                    </div>
+                  </select>
+                    <div class = "form-group mb-3">
+                        <input type="text" name="lastname" placeholder="Apellido" class="form-control">
+                    </div>
+                    <div class = "form-group mb-3">
+                        <input type="email" name="email" placeholder="Correo" class="form-control">
+                    </div>
+                    <div class = "form-group mb-3">
+                        <input type="text" name="cellphone" placeholder="Celular" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="formFile" class="form-label">Imagen de perfil</label>
+                        <input class="form-control" type="file" name="photoURL" id="formFile">
+                      </div>
+                      <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Registrar Petsitter</button> 
+                </form>
+           </div> 
+        </div>
+</div>
+</div>
+</div>
+<div id="modalPet" class="modal fade" tabindex="-1" aria-labelledby="modalPet" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="exampleModalLabel">Editar Petsitter</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/update" method="POST">
+              <input name="id_updt" id="id_updt" type="text" hidden>
+            <div class="mb-3">
+              <label for="name_updt" class="col-form-label">Nombre:</label>
+              <input id="name_updt" name="name_updt" type="text" class="form-control" value="">
+            </div>
+          <label for="cityId_updt">Ciudad: </label>
+          <select class="custom-select mb-3" type="text" name="cityId_updt" id="cityId_updt" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false">
+          <div class="dropdown-menu" aria-labelledby="City">
+            <% cdata.forEach( (cdata) => { %>
+              <option value="<%=cdata.id%>"><%=cdata.Nombre%></option>  
+          <%})%>
+        </div>
+          </select>
+            <div class="mb-3">
+                <label for="lastname_updt" class="col-form-label">Apellido:</label>
+                <input id="lastname_updt" name="lastname_updt" type="text" class="form-control" value="">
+              </div>
+              <div class="mb-3">
+                <label for="email_updt" class="col-form-label">Correo:</label>
+                <input id="email_updt" name="email_updt" type="email" class="form-control" value="">
+              </div>
+              <div class="mb-3">
+                <label for="cellphone_updt" class="col-form-label">Celular:</label>
+                <input id="cellphone_updt" name="cellphone_updt" type="text" class="form-control" value="">
+              </div> 
+        </div>
+        <div class="modal-footer">              
+          <button type="submit" class="btn btn-primary">Actualizar</button>
+        </div>
+      </form>
+      </div>
+    </div>
+</div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="js/code.js"></script>
+  </body>
+</html>
